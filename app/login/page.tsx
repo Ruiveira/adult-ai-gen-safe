@@ -18,21 +18,14 @@ export default function LoginPage() {
 
     try {
       if (isRegister) {
-        // Registro
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: {
-            data: { username: email.split("@")[0] },
-            emailRedirectTo: window.location.origin + "/dashboard",
-          },
+          options: { data: { username: email.split("@")[0] } },
         });
         if (error) throw error;
-        alert(
-          "Conta criada! Verifique seu email para confirmar (confira spam)."
-        );
+        alert("Conta criada! Verifique seu email para confirmar.");
       } else {
-        // Login
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -41,7 +34,7 @@ export default function LoginPage() {
         window.location.href = "/dashboard";
       }
     } catch (err: any) {
-      setError(err.message || "Erro ao processar. Tente novamente.");
+      setError(err.message || "Erro ao processar.");
     } finally {
       setLoading(false);
     }
@@ -49,7 +42,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-950">
-      <div className="bg-gray-800/80 backdrop-blur-sm p-10 rounded-3xl w-full max-w-md border border-purple-700/50 shadow-2xl">
+      <div className="bg-gray-800/80 p-10 rounded-3xl w-full max-w-md border border-purple-700/50 shadow-2xl">
         <h1 className="text-4xl font-black text-center mb-8 text-purple-400">
           {isRegister ? "Criar Conta" : "Entrar"}
         </h1>
@@ -61,8 +54,8 @@ export default function LoginPage() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Seu email"
-            className="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:ring-purple-500 text-white"
+            placeholder="Email"
+            className="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 text-white"
             required
           />
           <input
@@ -70,14 +63,13 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Senha"
-            className="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 focus:ring-purple-500 text-white"
+            className="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 focus:border-purple-500 text-white"
             required
           />
-
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-purple-600 hover:bg-purple-700 py-4 rounded-xl font-bold text-xl transition-all disabled:opacity-50"
+            className="w-full bg-purple-600 hover:bg-purple-700 py-4 rounded-xl font-bold text-xl disabled:opacity-50"
           >
             {loading ? "Carregando..." : isRegister ? "Registrar" : "Entrar"}
           </button>

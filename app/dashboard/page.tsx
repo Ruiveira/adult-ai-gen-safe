@@ -16,9 +16,7 @@ export default function Dashboard() {
         data: { user },
       } = await supabase.auth.getUser();
       setUser(user);
-      if (user) {
-        loadHistory(user.id);
-      }
+      if (user) loadHistory(user.id);
     };
     getUser();
   }, []);
@@ -33,31 +31,38 @@ export default function Dashboard() {
   };
 
   const handleGenerate = async () => {
-    if (!prompt) return;
+    if (!prompt || generating) return;
     setGenerating(true);
 
     try {
-      // Chama sua rota local ou externa de geração (exemplo com Hugging Face client-side)
-      const res = await fetch("/api/generate", {
-        // se tiver rota, senão use fetch direto para HF
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
-      });
-      const { imageUrl } = await res.json();
+      // Exemplo de geração com Hugging Face (client-side)
+      const res = await fetch(
+        "https://api-inference.huggingface.co/models/andite/anything-v4.0",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ inputs: prompt }),
+        }
+      );
+
+      const blob = await res.blob();
+      const imageUrl = URL.createObjectURL(blob);
 
       // Salva no Supabase
-      const { error } = await supabase
-        .from("generations")
-        .insert({ user_id: user.id, prompt, image_url: imageUrl });
-
-      if (error) throw error;
+      await supabase.from("generations").insert({
+        user_id: user.id,
+        prompt,
+        image_url: imageUrl, // ou suba para Storage se quiser
+      });
 
       loadHistory(user.id);
       setPrompt("");
     } catch (err) {
       console.error(err);
-      alert("Erro ao gerar. Tente novamente.");
+      alert("Erro ao gerar. Verifique a chave Hugging Face.");
     } finally {
       setGenerating(false);
     }
@@ -68,7 +73,7 @@ export default function Dashboard() {
       <div className="min-h-screen flex items-center justify-center bg-gray-950">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-6 text-purple-400">Dashboard</h1>
-          <p className="text-xl mb-8">Faça login para acessar.</p>
+          <p className="text-xl mb-8">Faça login para acessar suas gerações.</p>
           <Link
             href="/login"
             className="bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-full text-xl font-bold"
@@ -83,7 +88,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 p-8">
       <h1 className="text-5xl font-bold text-purple-400 mb-8 text-center">
-        Bem-vindo, {user.email}
+        Dashboard – Bem-vindo, {user.email}
       </h1>
 
       <div className="max-w-4xl mx-auto">
@@ -116,7 +121,7 @@ export default function Dashboard() {
                 alt={item.prompt}
                 className="w-full h-48 object-cover rounded mb-4"
               />
-              <p className="text-sm text-gray-300">{item.prompt}</p>
+              <p className="text-sm text-gray-300 truncate">{item.prompt}</p>
             </div>
           ))}
         </div>
