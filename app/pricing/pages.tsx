@@ -1,19 +1,9 @@
 "use client";
 
-import { loadStripe } from "@stripe/stripe-js";
-
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-);
-
 export default function PricingPage() {
-  // Links reais do Stripe que você forneceu
-  const proCheckoutUrl = "https://buy.stripe.com/fZu9AL9eGbPZ6qn7LN4c80C";
-  const premiumCheckoutUrl = "https://buy.stripe.com/cNi3cn1MeaLV9Czfef4c80D";
-
-  const handleCheckout = (url: string) => {
-    window.location.href = url;
-  };
+  // Seus links reais do Stripe Checkout
+  const proUrl = "https://buy.stripe.com/fZu9AL9eGbPZ6qn7LN4c80C";
+  const premiumUrl = "https://buy.stripe.com/cNi3cn1MeaLV9Czfef4c80D";
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 py-16 px-4 md:px-8">
@@ -23,41 +13,27 @@ export default function PricingPage() {
         </h1>
 
         <p className="text-xl md:text-2xl text-center mb-16 text-gray-300 max-w-3xl mx-auto">
-          Comece hoje mesmo com 5 gerações grátis. Desbloqueie ilimitado com o
-          plano Pro ou Premium.
+          Comece grátis com 5 gerações. Desbloqueie ilimitado com Pro ou
+          Premium.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* ==================== PLANO GRÁTIS ==================== */}
+          {/* Grátis */}
           <div className="bg-gray-900/60 backdrop-blur-sm border border-gray-700 rounded-3xl p-8 flex flex-col h-full shadow-xl">
             <h2 className="text-4xl font-bold text-center mb-2">Grátis</h2>
             <div className="text-5xl font-black text-center mb-6 text-purple-400">
               R$ <span className="text-4xl">0</span>
               <span className="text-2xl font-normal">/mês</span>
             </div>
-
-            <ul className="space-y-5 mb-10 flex-1">
-              <li className="flex items-center gap-3 text-lg">
-                <span className="text-green-400 text-2xl">✓</span> 5 gerações
-                por mês
+            <ul className="space-y-5 mb-10 flex-1 text-lg">
+              <li>✓ 5 gerações por mês</li>
+              <li>✓ Imagens básicas</li>
+              <li className="text-gray-500 line-through">
+                ✗ Gerações ilimitadas
               </li>
-              <li className="flex items-center gap-3 text-lg">
-                <span className="text-green-400 text-2xl">✓</span> Imagens
-                fotorrealistas e anime
-              </li>
-              <li className="flex items-center gap-3 text-lg text-gray-500 line-through">
-                <span className="text-red-400 text-2xl">✗</span> Gerações
-                ilimitadas
-              </li>
-              <li className="flex items-center gap-3 text-lg text-gray-500 line-through">
-                <span className="text-red-400 text-2xl">✗</span> Vídeos
-              </li>
-              <li className="flex items-center gap-3 text-lg text-gray-500 line-through">
-                <span className="text-red-400 text-2xl">✗</span> Marketplace de
-                prompts
-              </li>
+              <li className="text-gray-500 line-through">✗ Vídeos</li>
+              <li className="text-gray-500 line-through">✗ Marketplace</li>
             </ul>
-
             <button
               disabled
               className="w-full bg-gray-700 text-gray-400 py-5 rounded-2xl font-bold text-xl cursor-not-allowed"
@@ -66,52 +42,38 @@ export default function PricingPage() {
             </button>
           </div>
 
-          {/* ==================== PLANO PRO – R$19,90 ==================== */}
+          {/* Pro R$19,90 */}
           <div className="bg-gradient-to-b from-purple-900/80 to-purple-950/80 border-2 border-purple-500 rounded-3xl p-8 relative shadow-2xl flex flex-col h-full transform scale-105">
-            {/* Tag Recomendado */}
             <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-purple-600 px-8 py-2 rounded-full font-bold text-white shadow-lg">
               MAIS POPULAR
             </div>
-
             <h2 className="text-4xl font-bold text-center mb-2 mt-8">Pro</h2>
             <div className="text-5xl font-black text-center mb-6">
               R$ <span className="text-6xl">19</span>
               <span className="text-3xl">,90</span>
               <span className="text-2xl font-normal">/mês</span>
             </div>
-
-            <ul className="space-y-5 mb-10 flex-1">
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span>{" "}
-                <strong>Gerações ilimitadas</strong>
+            <ul className="space-y-5 mb-10 flex-1 text-lg">
+              <li>
+                ✓ <strong>Gerações ilimitadas</strong>
               </li>
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span> Imagens e
-                vídeos HD
-              </li>
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span> Acesso ao{" "}
-                <strong>Marketplace</strong>
-              </li>
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span> Extensões
-                avançadas
-              </li>
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span> Prioridade
-                nas filas
-              </li>
+              <li>✓ Imagens e vídeos HD</li>
+              <li>✓ Acesso ao Marketplace</li>
+              <li>✓ Extensões avançadas</li>
+              <li>✓ Prioridade nas filas</li>
             </ul>
-
             <button
-              onClick={() => (window.location.href = proCheckoutUrl)}
+              onClick={() =>
+                (window.location.href =
+                  "https://buy.stripe.com/fZu9AL9eGbPZ6qn7LN4c80C")
+              }
               className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 py-6 rounded-2xl font-bold text-2xl shadow-xl transition-all transform hover:scale-105"
             >
               Assinar Pro
             </button>
           </div>
 
-          {/* ==================== PLANO PREMIUM – R$49,90 ==================== */}
+          {/* Premium R$49,90 */}
           <div className="bg-gradient-to-b from-purple-950/80 to-black border border-purple-700 rounded-3xl p-8 flex flex-col h-full shadow-2xl">
             <h2 className="text-4xl font-bold text-center mb-2 mt-8">
               Premium
@@ -121,32 +83,20 @@ export default function PricingPage() {
               <span className="text-3xl">,90</span>
               <span className="text-2xl font-normal">/mês</span>
             </div>
-
-            <ul className="space-y-5 mb-10 flex-1">
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span>{" "}
-                <strong>Tudo do Pro</strong>
+            <ul className="space-y-5 mb-10 flex-1 text-lg">
+              <li>
+                ✓ <strong>Tudo do Pro</strong>
               </li>
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span> Vídeos longos
-                e avançados
-              </li>
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span> Extensões
-                exclusivas
-              </li>
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span> Suporte
-                prioritário
-              </li>
-              <li className="flex items-center gap-3 text-xl">
-                <span className="text-green-400 text-3xl">✓</span> Acesso
-                antecipado a novos modelos
-              </li>
+              <li>✓ Vídeos longos e avançados</li>
+              <li>✓ Extensões exclusivas</li>
+              <li>✓ Suporte prioritário</li>
+              <li>✓ Acesso antecipado a novos modelos</li>
             </ul>
-
             <button
-              onClick={() => (window.location.href = premiumCheckoutUrl)}
+              onClick={() =>
+                (window.location.href =
+                  "https://buy.stripe.com/cNi3cn1MeaLV9Czfef4c80D")
+              }
               className="w-full bg-gradient-to-r from-purple-700 to-purple-900 hover:from-purple-800 hover:to-purple-950 py-6 rounded-2xl font-bold text-2xl shadow-xl transition-all transform hover:scale-105"
             >
               Assinar Premium
