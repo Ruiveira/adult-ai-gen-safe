@@ -9,6 +9,7 @@ export default function Dashboard() {
   const [prompt, setPrompt] = useState("");
   const [generating, setGenerating] = useState(false);
   const [history, setHistory] = useState<any[]>([]);
+  const [isPro, setIsPro] = useState(false); // Verificação de plano
 
   useEffect(() => {
     const getUser = async () => {
@@ -17,6 +18,7 @@ export default function Dashboard() {
       } = await supabase.auth.getUser();
       setUser(user);
       if (user) loadHistory(user.id);
+      setIsPro(true); // Placeholder – verifique com Stripe webhook em produção
     };
     getUser();
   }, []);
@@ -31,11 +33,16 @@ export default function Dashboard() {
   };
 
   const handleGenerate = async () => {
+    if (!isPro) {
+      alert("Assine Pro ou Premium para acessar geração ilimitada.");
+      window.location.href = "/pricing";
+      return;
+    }
     if (!prompt || generating) return;
     setGenerating(true);
 
     try {
-      // Exemplo de geração com Hugging Face (client-side)
+      // Geração com Hugging Face
       const res = await fetch(
         "https://api-inference.huggingface.co/models/andite/anything-v4.0",
         {
@@ -55,7 +62,7 @@ export default function Dashboard() {
       await supabase.from("generations").insert({
         user_id: user.id,
         prompt,
-        image_url: imageUrl, // ou suba para Storage se quiser
+        image_url: imageUrl,
       });
 
       loadHistory(user.id);
