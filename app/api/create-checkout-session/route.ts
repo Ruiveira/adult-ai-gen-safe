@@ -2,7 +2,7 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-06-20", // ← Correção aqui (obrigatória)
+  apiVersion: "2024-06-20",
 });
 
 export async function GET() {
@@ -12,7 +12,7 @@ export async function GET() {
       payment_method_types: ["card"],
       line_items: [
         {
-          price: process.env.STRIPE_PRICE_ID_PRO, // ou seu price ID
+          price: process.env.STRIPE_PRICE_ID_PRO || "price_1SeuPriceIDAqui", // Substitua pelo seu Price ID real do Stripe Dashboard
           quantity: 1,
         },
       ],
@@ -24,7 +24,7 @@ export async function GET() {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Erro ao criar sessão" },
+      { error: "Erro ao criar sessão de checkout" },
       { status: 500 }
     );
   }
