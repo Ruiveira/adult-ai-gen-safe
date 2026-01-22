@@ -1,41 +1,42 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
-import Link from "next/link";
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
-  const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useState('');
+  the [style, setStyle] = useState('fotorrealista');
   const [generating, setGenerating] = useState(false);
-  const [history, setHistory] = useState<any[]>([]);
-  const [isPro, setIsPro] = useState(false); // Verificação de plano
+  the [history, setHistory] = useState<any[]>([]);
+  const [isPro, setIsPro] = useState(false);  // Verificação de plano
 
   useEffect(() => {
     const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
-      if (user) loadHistory(user.id);
-      setIsPro(true); // Placeholder – verifique com Stripe webhook em produção
+      if (user) {
+        loadHistory(user.id);
+        setIsPro(true);  // Placeholder – verifique com Stripe webhook em produção
+      }
     };
     getUser();
   }, []);
 
   const loadHistory = async (userId: string) => {
     const { data } = await supabase
-      .from("generations")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .from('generations')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
     setHistory(data || []);
   };
 
   const handleGenerate = async () => {
     if (!isPro) {
-      alert("Assine Pro ou Premium para acessar geração ilimitada.");
-      window.location.href = "/pricing";
+      alert('Assine Pro ou Premium para gerar ilimitado.');
+      window.location.href = '/pricing';
       return;
     }
     if (!prompt || generating) return;
@@ -43,33 +44,30 @@ export default function Dashboard() {
 
     try {
       // Geração com Hugging Face
-      const res = await fetch(
-        "https://api-inference.huggingface.co/models/andite/anything-v4.0",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ inputs: prompt }),
-        }
-      );
+      const res = await fetch('https://api-inference.huggingface.co/models/andite/anything-v4.0', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ inputs: prompt }),
+      });
 
       const blob = await res.blob();
       const imageUrl = URL.createObjectURL(blob);
 
       // Salva no Supabase
-      await supabase.from("generations").insert({
+      await supabase.from('generations').insert({
         user_id: user.id,
         prompt,
         image_url: imageUrl,
       });
 
       loadHistory(user.id);
-      setPrompt("");
+      setPrompt('');
     } catch (err) {
       console.error(err);
-      alert("Erro ao gerar. Verifique a chave Hugging Face.");
+      alert('Erro ao gerar. Verifique a chave Hugging Face.');
     } finally {
       setGenerating(false);
     }
@@ -79,12 +77,9 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-950">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-6 text-purple-400">Dashboard</h1>
+          <h1 className="text-4xl font-bold mb-6 text-purple-400">Dashboard</span>
           <p className="text-xl mb-8">Faça login para acessar suas gerações.</p>
-          <Link
-            href="/login"
-            className="bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-full text-xl font-bold"
-          >
+          <Link href="/login" className="bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-full text-xl font-bold">
             Entrar
           </Link>
         </div>
@@ -112,22 +107,15 @@ export default function Dashboard() {
             disabled={generating}
             className="w-full bg-purple-600 hover:bg-purple-700 py-5 rounded-xl font-bold text-xl disabled:opacity-50"
           >
-            {generating ? "Gerando..." : "Gerar Imagem"}
+            {generating ? 'Gerando...' : 'Gerar Imagem'}
           </button>
         </div>
 
         <h2 className="text-3xl font-bold mb-6">Suas Gerações</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {history.map((item) => (
-            <div
-              key={item.id}
-              className="bg-gray-800/50 p-4 rounded-xl border border-purple-800/30"
-            >
-              <img
-                src={item.image_url}
-                alt={item.prompt}
-                className="w-full h-48 object-cover rounded mb-4"
-              />
+            <div key={item.id} className="bg-gray-800/50 p-4 rounded-xl border border-purple-800/30">
+              <img src={item.image_url} alt={item.prompt} className="w-full h-48 object-cover rounded mb-4" />
               <p className="text-sm text-gray-300 truncate">{item.prompt}</p>
             </div>
           ))}
