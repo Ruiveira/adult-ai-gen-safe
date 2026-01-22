@@ -7,86 +7,160 @@ const stripePromise = loadStripe(
 );
 
 export default function PricingPage() {
-  const handleCheckout = async (priceId: string) => {
-    const stripe = await stripePromise;
-    if (!stripe) return;
+  // Links reais do Stripe que você forneceu
+  const proCheckoutUrl = "https://buy.stripe.com/fZu9AL9eGbPZ6qn7LN4c80C";
+  const premiumCheckoutUrl = "https://buy.stripe.com/cNi3cn1MeaLV9Czfef4c80D";
 
-    const { error } = await stripe.redirectToCheckout({
-      lineItems: [{ price: priceId, quantity: 1 }],
-      mode: "subscription",
-      successUrl: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancelUrl: `${window.location.origin}/pricing`,
-    });
-
-    if (error) {
-      console.error(error.message);
-    }
+  const handleCheckout = (url: string) => {
+    window.location.href = url;
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen bg-gray-950 text-gray-100 py-16 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-5xl font-bold text-center mb-12 text-purple-500">
+        <h1 className="text-5xl md:text-6xl font-black text-center mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
           Escolha seu Plano
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Plano Grátis */}
-          <div className="bg-gray-800 p-8 rounded-2xl border border-gray-700 shadow-xl">
-            <h2 className="text-3xl font-bold mb-4 text-center">Grátis</h2>
-            <p className="text-center text-2xl mb-6">R$ 0,00</p>
-            <ul className="space-y-3 mb-8">
-              <li>✓ 5 gerações por mês</li>
-              <li>✓ Imagens básicas</li>
-              <li>✗ Marketplace</li>
+        <p className="text-xl md:text-2xl text-center mb-16 text-gray-300 max-w-3xl mx-auto">
+          Comece hoje mesmo com 5 gerações grátis. Desbloqueie ilimitado com o
+          plano Pro ou Premium.
+        </p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* ==================== PLANO GRÁTIS ==================== */}
+          <div className="bg-gray-900/60 backdrop-blur-sm border border-gray-700 rounded-3xl p-8 flex flex-col h-full shadow-xl">
+            <h2 className="text-4xl font-bold text-center mb-2">Grátis</h2>
+            <div className="text-5xl font-black text-center mb-6 text-purple-400">
+              R$ <span className="text-4xl">0</span>
+              <span className="text-2xl font-normal">/mês</span>
+            </div>
+
+            <ul className="space-y-5 mb-10 flex-1">
+              <li className="flex items-center gap-3 text-lg">
+                <span className="text-green-400 text-2xl">✓</span> 5 gerações
+                por mês
+              </li>
+              <li className="flex items-center gap-3 text-lg">
+                <span className="text-green-400 text-2xl">✓</span> Imagens
+                fotorrealistas e anime
+              </li>
+              <li className="flex items-center gap-3 text-lg text-gray-500 line-through">
+                <span className="text-red-400 text-2xl">✗</span> Gerações
+                ilimitadas
+              </li>
+              <li className="flex items-center gap-3 text-lg text-gray-500 line-through">
+                <span className="text-red-400 text-2xl">✗</span> Vídeos
+              </li>
+              <li className="flex items-center gap-3 text-lg text-gray-500 line-through">
+                <span className="text-red-400 text-2xl">✗</span> Marketplace de
+                prompts
+              </li>
             </ul>
-            <button className="w-full bg-gray-600 py-4 rounded-lg font-bold text-lg cursor-not-allowed">
+
+            <button
+              disabled
+              className="w-full bg-gray-700 text-gray-400 py-5 rounded-2xl font-bold text-xl cursor-not-allowed"
+            >
               Plano Atual
             </button>
           </div>
 
-          {/* Plano Pro */}
-          <div className="bg-purple-900 p-8 rounded-2xl border-2 border-purple-500 shadow-2xl relative">
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-purple-600 px-6 py-2 rounded-full font-bold">
-              Recomendado
+          {/* ==================== PLANO PRO – R$19,90 ==================== */}
+          <div className="bg-gradient-to-b from-purple-900/80 to-purple-950/80 border-2 border-purple-500 rounded-3xl p-8 relative shadow-2xl flex flex-col h-full transform scale-105">
+            {/* Tag Recomendado */}
+            <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-purple-600 px-8 py-2 rounded-full font-bold text-white shadow-lg">
+              MAIS POPULAR
             </div>
-            <h2 className="text-3xl font-bold mb-4 text-center">Pro</h2>
-            <p className="text-center text-2xl mb-6">
-              R$ 19,90 <span className="text-lg">/mês</span>
-            </p>
-            <ul className="space-y-3 mb-8">
-              <li>✓ Gerações ilimitadas</li>
-              <li>✓ Imagens e vídeos HD</li>
-              <li>✓ Acesso ao Marketplace</li>
+
+            <h2 className="text-4xl font-bold text-center mb-2 mt-8">Pro</h2>
+            <div className="text-5xl font-black text-center mb-6">
+              R$ <span className="text-6xl">19</span>
+              <span className="text-3xl">,90</span>
+              <span className="text-2xl font-normal">/mês</span>
+            </div>
+
+            <ul className="space-y-5 mb-10 flex-1">
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span>{" "}
+                <strong>Gerações ilimitadas</strong>
+              </li>
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span> Imagens e
+                vídeos HD
+              </li>
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span> Acesso ao{" "}
+                <strong>Marketplace</strong>
+              </li>
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span> Extensões
+                avançadas
+              </li>
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span> Prioridade
+                nas filas
+              </li>
             </ul>
+
             <button
-              onClick={() =>
-                handleCheckout("https://buy.stripe.com/fZu9AL9eGbPZ6qn7LN4c80C")
-              }
-              className="w-full bg-purple-600 hover:bg-purple-700 py-4 rounded-lg font-bold text-lg transition-colors"
+              onClick={() => (window.location.href = proCheckoutUrl)}
+              className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 py-6 rounded-2xl font-bold text-2xl shadow-xl transition-all transform hover:scale-105"
             >
               Assinar Pro
             </button>
           </div>
 
-          {/* Plano Premium */}
-          <div className="bg-purple-950 p-8 rounded-2xl border border-purple-700 shadow-xl">
-            <h2 className="text-3xl font-bold mb-4 text-center">Premium</h2>
-            <p className="text-center text-2xl mb-6">
-              R$ 49,90 <span className="text-lg">/mês</span>
-            </p>
-            <ul className="space-y-3 mb-8">
-              <li>✓ Tudo do Pro</li>
-              <li>✓ Vídeos longos e avançados</li>
-              <li>✓ Prioridade nas filas</li>
+          {/* ==================== PLANO PREMIUM – R$49,90 ==================== */}
+          <div className="bg-gradient-to-b from-purple-950/80 to-black border border-purple-700 rounded-3xl p-8 flex flex-col h-full shadow-2xl">
+            <h2 className="text-4xl font-bold text-center mb-2 mt-8">
+              Premium
+            </h2>
+            <div className="text-5xl font-black text-center mb-6">
+              R$ <span className="text-6xl">49</span>
+              <span className="text-3xl">,90</span>
+              <span className="text-2xl font-normal">/mês</span>
+            </div>
+
+            <ul className="space-y-5 mb-10 flex-1">
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span>{" "}
+                <strong>Tudo do Pro</strong>
+              </li>
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span> Vídeos longos
+                e avançados
+              </li>
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span> Extensões
+                exclusivas
+              </li>
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span> Suporte
+                prioritário
+              </li>
+              <li className="flex items-center gap-3 text-xl">
+                <span className="text-green-400 text-3xl">✓</span> Acesso
+                antecipado a novos modelos
+              </li>
             </ul>
+
             <button
-              onClick={() => handleCheckout("price_SEU_ID_DO_PREMIUM_AQUI")}
-              className="w-full bg-purple-600 hover:bg-purple-700 py-4 rounded-lg font-bold text-lg transition-colors"
+              onClick={() => (window.location.href = premiumCheckoutUrl)}
+              className="w-full bg-gradient-to-r from-purple-700 to-purple-900 hover:from-purple-800 hover:to-purple-950 py-6 rounded-2xl font-bold text-2xl shadow-xl transition-all transform hover:scale-105"
             >
               Assinar Premium
             </button>
           </div>
+        </div>
+
+        <div className="text-center mt-16 text-gray-400 text-xl">
+          <p>
+            Qualquer dúvida?{" "}
+            <a href="/contact" className="text-purple-400 hover:underline">
+              Fale conosco
+            </a>
+          </p>
         </div>
       </div>
     </div>
