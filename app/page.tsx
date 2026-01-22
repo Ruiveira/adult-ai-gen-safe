@@ -3,7 +3,7 @@ import Link from "next/link";
 export const metadata = {
   title: "Adult AI Gen - O Maior Gerador de Pornô com IA",
   description:
-    "Gere pornô com IA de alta qualidade, uncensored e personalizado. Imagens fotorrealistas, anime, vídeos curtos e mais.",
+    "Gere pornô com IA de alta qualidade, uncensored e personalizado. Imagens fotorrealistas, anime, vídeos curtos e mais. Mais de 5 milhões de gerações por criadores mundiais.",
 };
 
 export default function Home() {
@@ -23,12 +23,12 @@ export default function Home() {
             18 anos ou mais?
           </p>
           <div className="space-x-6">
-            <Link
-              href="/dashboard"
-              className="bg-purple-600 hover:bg-purple-700 px-12 py-6 rounded-full text-2xl font-bold transition-all shadow-2xl inline-block"
+            <button
+              onClick={() => document.getElementById("age-gate")?.remove()}
+              className="bg-purple-600 hover:bg-purple-700 px-12 py-6 rounded-full text-2xl font-bold transition-all shadow-2xl"
             >
               Sim, tenho 18+
-            </Link>
+            </button>
             <a
               href="https://www.google.com"
               className="bg-red-600 hover:bg-red-700 px-12 py-6 rounded-full text-2xl font-bold transition-all"
@@ -74,21 +74,95 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Amostras */}
+      {/* Amostras com imagens de mulheres e videos */}
       <section className="py-20 bg-gray-900/50">
         <div className="max-w-7xl mx-auto px-6">
           <h3 className="text-4xl font-bold text-center mb-12 text-purple-400">
             Amostras Geradas por Usuários
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {["Amostra 1", "Amostra 2", "Amostra 3"].map((_, i) => (
+            {[1, 2, 3].map((i) => (
               <div
                 key={i}
                 className="bg-gray-800/50 p-6 rounded-2xl border border-purple-800/30 shadow-xl"
               >
-                <div className="w-full h-80 bg-gradient-to-br from-purple-900/50 to-gray-900 rounded-xl mb-6" />
+                <img
+                  src={`/amostra-${i}.jpg`}
+                  alt={`Amostra de mulher ${i}`}
+                  className="w-full h-80 object-cover rounded-xl mb-6 transition-transform hover:scale-105"
+                />{" "}
+                {/* Placeholder – baixe imagens reais e coloque em public/amostra-1.jpg, etc. */}
+                <video
+                  src={`/video-${i}.mp4`}
+                  controls
+                  className="w-full h-80 object-cover rounded-xl mb-6 transition-transform hover:scale-105"
+                />{" "}
+                {/* Placeholder – baixe videos reais e coloque in public/video-1.mp4, etc. */}
                 <p className="text-center text-lg text-gray-300">
                   Gerado por membro Adult AI Gen
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Extensões / Fetishes */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <h3 className="text-4xl font-bold text-center mb-12 text-purple-400">
+            Temos seu Fetish Coberto
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              "POV BJ V1",
+              "Gooned",
+              "Bimbo Lips V4",
+              "E-Girls V2",
+              "Titfuck V1",
+              "Doggy Anal V1",
+              "Futanari V4",
+              "Bukkake V1",
+            ].map((ext) => (
+              <div
+                key={ext}
+                className="bg-purple-900/30 p-6 rounded-2xl text-center hover:bg-purple-800/50 transition"
+              >
+                <p className="text-xl font-bold">{ext}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Depoimentos */}
+      <section className="py-20 bg-gray-900/50">
+        <div className="max-w-7xl mx-auto px-6">
+          <h3 className="text-4xl font-bold text-center mb-12 text-purple-400">
+            O que os usuários dizem
+          </h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                text: "Melhor que qualquer outro site de IA adulta. Ilimitado é vida!",
+                name: "Usuário Pro",
+              },
+              {
+                text: "Imagens perfeitas, vídeos rápidos. Recomendo o Premium.",
+                name: "Criador Premium",
+              },
+              {
+                text: "Marketplace de prompts mudou meu jogo. Vale cada centavo.",
+                name: "João, Campinas",
+              },
+            ].map((dep, i) => (
+              <div
+                key={i}
+                className="bg-gray-800/50 p-8 rounded-2xl border border-purple-800/30 italic"
+              >
+                <p className="text-lg mb-4">"{dep.text}"</p>
+                <p className="text-purple-400 font-bold text-right">
+                  - {dep.name}
                 </p>
               </div>
             ))}
