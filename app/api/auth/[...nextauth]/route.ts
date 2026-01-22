@@ -6,23 +6,27 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: { username: string; password: string }) {
-        // Lógica de auth simples; use DB real
+      async authorize(credentials) {
+        // Lógica simples de teste (substitua por Supabase depois)
         if (
-          credentials.username === "user" &&
-          credentials.password === "pass"
+          credentials?.email === "test@exemplo.com" &&
+          credentials?.password === "123"
         ) {
-          return { id: 1, name: "User" };
+          return { id: "1", name: "Test User", email: "test@exemplo.com" };
         }
         return null;
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/login",
+  },
 };
 
 const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };
