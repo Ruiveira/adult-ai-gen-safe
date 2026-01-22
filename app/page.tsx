@@ -11,27 +11,27 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-purple-950 to-black text-gray-100">
       {/* Age Gate */}
       <section
-        className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
+        className="fixed inset-0 bg-black/95 flex items-center justify-center z-50"
         id="age-gate"
       >
         <div className="text-center p-8 max-w-lg">
-          <h1 className="text-6xl font-black mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+          <h1 className="text-6xl md:text-8xl font-black mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
             Adult AI Gen
           </h1>
-          <p className="text-2xl mb-8">
-            Esta plataforma contém conteúdo adulto explícito. Você tem 18 anos
-            ou mais?
+          <p className="text-2xl md:text-3xl mb-8">
+            Esta plataforma contém conteúdo adulto explícito. Você confirma ter
+            18 anos ou mais?
           </p>
           <div className="space-x-6">
             <button
               onClick={() => document.getElementById("age-gate")?.remove()}
-              className="bg-purple-600 hover:bg-purple-700 px-10 py-5 rounded-full text-2xl font-bold transition-all shadow-xl"
+              className="bg-purple-600 hover:bg-purple-700 px-12 py-6 rounded-full text-2xl font-bold transition-all shadow-2xl"
             >
               Sim, tenho 18+
             </button>
             <a
               href="https://www.google.com"
-              className="bg-red-600 hover:bg-red-700 px-10 py-5 rounded-full text-2xl font-bold transition-all"
+              className="bg-red-600 hover:bg-red-700 px-12 py-6 rounded-full text-2xl font-bold transition-all"
             >
               Não, sair
             </a>
@@ -86,8 +86,7 @@ export default function Home() {
                 key={i}
                 className="bg-gray-800/50 p-6 rounded-2xl border border-purple-800/30 shadow-xl"
               >
-                <div className="w-full h-80 bg-gradient-to-br from-purple-900/50 to-gray-900 rounded-xl mb-6" />{" "}
-                {/* Placeholder */}
+                <div className="w-full h-80 bg-gradient-to-br from-purple-900/50 to-gray-900 rounded-xl mb-6" />
                 <p className="text-center text-lg text-gray-300">
                   Gerado por membro Adult AI Gen
                 </p>
