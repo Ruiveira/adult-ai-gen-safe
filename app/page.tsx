@@ -23,12 +23,12 @@ export default function Home() {
             18 anos ou mais?
           </p>
           <div className="space-x-6">
-            <button
-              onClick={() => document.getElementById("age-gate")?.remove()}
-              className="bg-purple-600 hover:bg-purple-700 px-12 py-6 rounded-full text-2xl font-bold transition-all shadow-2xl"
+            <Link
+              href="/dashboard"
+              className="bg-purple-600 hover:bg-purple-700 px-12 py-6 rounded-full text-2xl font-bold transition-all shadow-2xl inline-block"
             >
               Sim, tenho 18+
-            </button>
+            </Link>
             <a
               href="https://www.google.com"
               className="bg-red-600 hover:bg-red-700 px-12 py-6 rounded-full text-2xl font-bold transition-all"
