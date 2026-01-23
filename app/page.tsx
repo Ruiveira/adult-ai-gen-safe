@@ -1,15 +1,15 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Adult AI Gen - O Maior Gerador de Pornô com IA",
+  title: "Adult AI Gen - Gerador de Pornô IA Uncensored",
   description:
-    "Gere pornô com IA de alta qualidade, uncensored e personalizado. Imagens fotorrealistas, anime, vídeos curtos e mais. Mais de 5 milhões de gerações por criadores mundiais.",
+    "Gere pornô explícito com IA: sexo, vagina, penis, transa, chupando, etc. Alta qualidade, sem censura, fotorrealista, anime, vídeos. Para maiores de 18.",
 };
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-purple-950 to-black text-gray-100">
-      {/* Age Gate */}
+      {/* Age Gate – leva direto para o site */}
       <section
         className="fixed inset-0 bg-black/95 flex items-center justify-center z-50"
         id="age-gate"
@@ -19,16 +19,16 @@ export default function Home() {
             Adult AI Gen
           </h1>
           <p className="text-2xl md:text-3xl mb-8">
-            Esta plataforma contém conteúdo adulto explícito. Você confirma ter
-            18 anos ou mais?
+            Conteúdo explícito para maiores de 18: pornô, sexo, vagina, penis,
+            transa, etc. Você confirma ter 18 anos ou mais?
           </p>
           <div className="space-x-6">
-            <Link
-              href="/dashboard"
-              className="bg-purple-600 hover:bg-purple-700 px-12 py-6 rounded-full text-2xl font-bold transition-all shadow-2xl inline-block"
+            <button
+              onClick={() => document.getElementById("age-gate")?.remove()}
+              className="bg-purple-600 hover:bg-purple-700 px-12 py-6 rounded-full text-2xl font-bold transition-all shadow-2xl"
             >
               Sim, tenho 18+
-            </Link>
+            </button>
             <a
               href="https://www.google.com"
               className="bg-red-600 hover:bg-red-700 px-12 py-6 rounded-full text-2xl font-bold transition-all"
@@ -44,6 +44,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-3xl font-black text-purple-400">Adult AI Gen</h1>
           <nav className="space-x-8">
+            <Link href="/generate" className="hover:text-purple-300 transition">
+              Gerar
+            </Link>
             <Link href="/pricing" className="hover:text-purple-300 transition">
               Planos
             </Link>
@@ -60,46 +63,44 @@ export default function Home() {
       {/* Headline Principal */}
       <section className="pt-32 pb-24 text-center">
         <h2 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-          Crie Pornô com IA do Seu Jeito
+          Gere Pornô Explícito com IA
         </h2>
         <p className="text-2xl md:text-3xl mb-8 max-w-4xl mx-auto text-gray-300">
-          Alta qualidade, sem censura, extremo. Mais de 5 milhões de gerações
-          por criadores no mundo inteiro.
+          Sem censura: mulher chupando penis, mostrando vagina, transando, sexo
+          explícito, etc. Mais de 5 milhões de gerações.
         </p>
         <Link
-          href="/login"
+          href="/generate"
           className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-12 py-6 rounded-full text-3xl font-black shadow-2xl transition-all inline-block"
         >
-          Começar Agora Grátis
+          Gerar Agora
         </Link>
       </section>
 
-      {/* Amostras com imagens de mulheres e videos */}
+      {/* Amostras com imagens de mulheres e videos (explicitos placeholder) */}
       <section className="py-20 bg-gray-900/50">
         <div className="max-w-7xl mx-auto px-6">
           <h3 className="text-4xl font-bold text-center mb-12 text-purple-400">
-            Amostras Geradas por Usuários
+            Amostras de Pornô Gerado
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
+            {["1", "2", "3"].map((i) => (
               <div
                 key={i}
                 className="bg-gray-800/50 p-6 rounded-2xl border border-purple-800/30 shadow-xl"
               >
                 <img
                   src={`/amostra-${i}.jpg`}
-                  alt={`Amostra de mulher ${i}`}
+                  alt={`Mulher chupando penis ${i}`}
                   className="w-full h-80 object-cover rounded-xl mb-6 transition-transform hover:scale-105"
-                />{" "}
-                {/* Placeholder – baixe imagens reais e coloque em public/amostra-1.jpg, etc. */}
+                />
                 <video
                   src={`/video-${i}.mp4`}
                   controls
                   className="w-full h-80 object-cover rounded-xl mb-6 transition-transform hover:scale-105"
-                />{" "}
-                {/* Placeholder – baixe videos reais e coloque in public/video-1.mp4, etc. */}
+                />
                 <p className="text-center text-lg text-gray-300">
-                  Gerado por membro Adult AI Gen
+                  Mulher chupando penis, vagina, sexo explícito
                 </p>
               </div>
             ))}
@@ -111,7 +112,7 @@ export default function Home() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
           <h3 className="text-4xl font-bold text-center mb-12 text-purple-400">
-            Temos seu Fetish Coberto
+            Extensões para Fetishes
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
