@@ -9,7 +9,7 @@ export const metadata = {
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-purple-950 to-black text-gray-100">
-      {/* Age Gate – leva direto para o site */}
+      {/* Age Gate – leva direto para o site ao clicar */}
       <section
         className="fixed inset-0 bg-black/95 flex items-center justify-center z-50"
         id="age-gate"
@@ -23,12 +23,12 @@ export default function Home() {
             transa, etc. Você confirma ter 18 anos ou mais?
           </p>
           <div className="space-x-6">
-            <button
-              onClick={() => document.getElementById("age-gate")?.remove()}
-              className="bg-purple-600 hover:bg-purple-700 px-12 py-6 rounded-full text-2xl font-bold transition-all shadow-2xl"
+            <Link
+              href="/generate"
+              className="bg-purple-600 hover:bg-purple-700 px-12 py-6 rounded-full text-2xl font-bold transition-all shadow-2xl inline-block"
             >
               Sim, tenho 18+
-            </button>
+            </Link>
             <a
               href="https://www.google.com"
               className="bg-red-600 hover:bg-red-700 px-12 py-6 rounded-full text-2xl font-bold transition-all"
@@ -67,7 +67,7 @@ export default function Home() {
         </h2>
         <p className="text-2xl md:text-3xl mb-8 max-w-4xl mx-auto text-gray-300">
           Sem censura: mulher chupando penis, mostrando vagina, transando, sexo
-          explícito, etc. Mais de 5 milhões de gerações.
+          explícito, pornô completo. Mais de 5 milhões de gerações.
         </p>
         <Link
           href="/generate"
@@ -77,7 +77,7 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Amostras com imagens de mulheres e videos (explicitos placeholder) */}
+      {/* Amostras com imagens de mulheres e videos (explicitos) */}
       <section className="py-20 bg-gray-900/50">
         <div className="max-w-7xl mx-auto px-6">
           <h3 className="text-4xl font-bold text-center mb-12 text-purple-400">
@@ -100,7 +100,7 @@ export default function Home() {
                   className="w-full h-80 object-cover rounded-xl mb-6 transition-transform hover:scale-105"
                 />
                 <p className="text-center text-lg text-gray-300">
-                  Mulher chupando penis, vagina, sexo explícito
+                  Mulher chupando penis, vagina aberta, sexo explícito
                 </p>
               </div>
             ))}
